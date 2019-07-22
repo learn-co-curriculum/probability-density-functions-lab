@@ -1,276 +1,231 @@
 
-# Probability Density Functions Lab
+# The Probability Density Function - Lab
 
-## Problem Statement
+## Introduction
+In this lab, we will look at building visualizations known as **density plots** to estimate the probability density for a given set of data. 
 
-In this lab, we'll learn how to use Probability Density Functions (PDFs) to explore our data set.  We'll also dive deep into calculating the mean, median, mode, and trimmed mean, and explore how each are influenced by outliers.  
+## Objectives
 
-### Objectives
-* Compare and constrast the following Measures of Center: 
-    * Mean
-    * Median
-    * Mode
-    * Trimmed Mean
-* Demonstrate the effect outlier values has on each
-* Calculate each Measure of Center manually 
-* Use numpy to calculate each Measure of Center
+You will be able to:
 
-In the cell below, import `numpy` and alias it to `np`.  Also import `matplotlib.pyplot` as `plt`, and `norm` from `scipy.stats`.  Also set `%matplotlib inline`, and use `np.random.seed(0)` to set a random seed of 0 for reproducibility.   
+* Calculate the PDF from a given dataset containing real-valued random variables
+* Plot density functions and comment on the shape of the plot
+* Plot density functions using seaborn
+
+## Let's get started
+
+Let's import the necessary libraries for this lab.
 
 
 ```python
+# Import required libraries
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.stats
-from scipy.stats import norm
+plt.style.use('ggplot')
+import pandas as pd 
+```
+
+## Import the data, and calculate the mean and the standard deviation
+
+- Import the dataset 'weight-height.csv' as a pandas dataframe.
+
+- Next, calculate the mean and standard deviation for weights and heights for men and women individually. You can simply use the pandas `.mean()` and `.std()` to do so.
+
+**Hint**: Use your pandas dataframe subsetting skills like loc(), iloc() and groupby()
+
+
+```python
+data = pd.read_csv('weight-height.csv')
+male_df =  data.loc[data['Gender'] == 'Male']
+female_df =  data.loc[data['Gender'] == 'Female']
+
+print('Male Height mean:', male_df.Height.mean())
+print('Male Height sd:', male_df.Height.std())      
+
+print('Male Weight mean:', male_df.Weight.mean())
+print('Male Weight sd:' ,male_df.Weight.std())   
+
+print('Female Height mean:', female_df.Height.mean())
+print('Female Height sd:' ,female_df.Height.std())      
+
+print('Female Weight mean:', female_df.Weight.mean())
+print('Female Weight sd:' ,female_df.Weight.std())   
+
+# Male Height mean: 69.02634590621737
+# Male Height sd: 2.8633622286606517
+# Male Weight mean: 187.0206206581929
+# Male Weight sd: 19.781154516763813
+# Female Height mean: 63.708773603424916
+# Female Height sd: 2.696284015765056
+# Female Weight mean: 135.8600930074687
+# Female Weight sd: 19.022467805319007
+```
+
+    Male Height mean: 69.02634590621737
+    Male Height sd: 2.8633622286606517
+    Male Weight mean: 187.0206206581929
+    Male Weight sd: 19.781154516763813
+    Female Height mean: 63.708773603424916
+    Female Height sd: 2.696284015765056
+    Female Weight mean: 135.8600930074687
+    Female Weight sd: 19.022467805319007
+
+
+## Plot histograms (with densities on the y-axis) for male and female heights 
+
+- Make sure to create overlapping plots
+- use binsize = 10, set alpha level so that overlap can be visualized
+
+
+```python
+binsize = 10
+male_df.Height.plot.hist(bins = binsize, density = True,  alpha = 0.7, label ="Male Height");
+female_df.Height.plot.hist(bins = binsize, density = True, alpha = 0.7, label = 'Female Height');
+plt.legend()
+plt.show()
+```
+
+
+![png](index_files/index_5_0.png)
+
+
+
+```python
+# Record your observations - are these inline with your personal observations?
+
+# Men tend to have higher values of heights in general than female
+# The most common region for male and female heights is between 65 - 67 inches (about 5 and a half feet)
+# Male heights have a slightly higher spread than female heights, hence the male height peak is slightly smaller than female height
+# Both heights are normally distributed
+```
+
+## Create a density function using interpolation
+
+
+- Write a densit function density() that uses interpolation and takes in a random variable
+- Use`np.hist`
+- The function should return two lists carrying x and y coordinates for plotting the density function
+
+
+```python
+def density(x):
+    
+    n, bins = np.histogram(x, 10, density=1)
+    # Initialize numpy arrays with zeros to store interpolated values
+    pdfx = np.zeros(n.size)
+    pdfy = np.zeros(n.size)
+
+    # Interpolate through histogram bins 
+    # identify middle point between two neighbouring bins, in terms of x and y coords
+    for k in range(n.size):
+        pdfx[k] = 0.5*(bins[k]+bins[k+1])
+        pdfy[k] = n[k]
+
+    # plot the calculated curve
+    return pdfx, pdfy
+
+
+# Generate test data and test the function
+np.random.seed(5)
+mu, sigma = 0, 0.1 # mean and standard deviation
+s = np.random.normal(mu, sigma, 100)
+x,y = density(s)
+plt.plot(x,y, label = 'test')
+plt.legend()
+plt.show()
+```
+
+
+![png](index_files/index_8_0.png)
+
+
+## Add Overlapping density plots to the histograms plotted earlier
+
+
+```python
+male_df.Height.plot.hist(bins = binsize, normed = True,  alpha = 0.7, label ="Male Height");
+female_df.Height.plot.hist(bins = binsize, normed = True, alpha = 0.7, label = 'Female Height');
+plt.legend()
+x,y = density(male_df.Height)
+plt.plot(x,y)
+x,y = density(female_df.Height)
+plt.plot(x,y)
+plt.show()
+```
+
+
+![png](index_files/index_10_0.png)
+
+
+## Repeat above exerice for male and female weights
+
+
+```python
+male_df.Weight.plot.hist(bins = binsize, normed = True,  alpha = 0.7, label ="Male weight");
+female_df.Weight.plot.hist(bins = binsize, normed = True, alpha = 0.7, label = 'Female weight');
+plt.legend()
+x,y = density(male_df.Weight)
+plt.plot(x,y)
+x,y = density(female_df.Weight)
+plt.plot(x,y)
+plt.show()
+```
+
+
+![png](index_files/index_12_0.png)
+
+
+## Write your observations in the cell below
+
+
+```python
+# Record your observations - are these inline with your personal observations?
+
+# The patterns and overlap resemble highly with height distributions
+# Man generally are heavier than women
+# The common region for common weights is around 160 lbs. 
+# Male weight has slightly higher spread than female weight (i.e. more variation)
+# Most females are around 130-140 lbs whereas most men are around 180 pounds.
+
+#Takeaway
+
+# Weight is more suitable to distinguish between males and females than height
+```
+
+## Repeat Above experiments in seaborn and compare with your results
+
+
+```python
 import seaborn as sns
-%matplotlib inline
-# Set a seed for reproducibility--don't change it, or you'll break things!
-np.random.seed(0)
+sns.distplot(male_df.Height)
+sns.distplot(female_df.Height)
+plt.title('Comparing Heights')
+plt.show()
 ```
 
-We'll start by creating a synthetic dataset to work with.  This dataset will be normally distributed.   
 
-In the cell below:
+![png](index_files/index_16_0.png)
 
-**1.** Use numpy's [`random.normal()`](https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.normal.html) function to create a data set of `size=100`.    
-<br>
-**2.** Then, append the value `1.2` to our `data` array 5 times (we'll need this so that we can calculate a _mode_ later on).  Use the `np.append()` method and pass in the `data` variable, as well as an array containing `[1.2, 1.2, 1.2, 1.2, 1.2]`.  If you have trouble, take a look at the [documentation](https://docs.scipy.org/doc/numpy-1.14.0/reference/generated/numpy.append.html) for that method.  
-<br>
-**3.** Finally, use Seaborn's `sns.distplot()` method to visualize the probability density of this dataset.  
 
 
 ```python
-data = np.random.normal(size=100)
-data = np.append(data, [1.2, 1.2, 1.2, 1.2, 1.2])
-sns.distplot(data)
+import seaborn as sns
+sns.distplot(male_df.Weight)
+sns.distplot(female_df.Weight)
+plt.title('Comparing Weights')
+plt.show()
 ```
 
 
+![png](index_files/index_17_0.png)
 
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x2111aad1c88>
-
-
-
-
-![png](output_3_1.png)
-
-
-Great.  We'll want to plot it to make it visual, but before we can do that, we'll need to calculate some basic metrics such as the sample's **_mean_** and **_standard deviation_**. 
-
-In the cell below, write a function that takes in `data` and returns the mean.
-
-Recall that the formula for the mean is: 
-
-<center><img src='mean_formula.gif'></center>
-
-where:
-
-
-$\large \bar{x} = Sample\ Mean$
-
-$\large N = Length\ of\ Dataset$
-
-In the cell below, write a function that takes in an array of numbers and returns the mean of the data.  
-
-Then, test that it works by using it on the `data` variable that we created above!
 
 
 ```python
-def get_mean(data):
-    # lazy way --> return np.sum(data) / len(data)
-    accumulator = 0
-    for i in data:
-        accumulator += i
-    
-    return accumulator / len(data)
-
-mean = get_mean(data)
-print("Sample Mean: {:.6}".format(mean))
+# Your comments on the two approaches here. 
+# are they similar? what makes them different if they are?
 ```
 
-    Sample Mean: 0.114103
-    
+## Summary
 
-**Expected output:** Sample Mean: -0.059808
-
-Great! Now that we have the mean, we just need to calculate the standard deviation. Our next lab is all about standard deviation and variance, so we'll leave the manual calculations for that lab and just use numpy for this one. 
-
-Use the correct numpy function to calculate the standard deviation of `data` in the cell below. 
-
-
-```python
-std_dev = np.std(data)
-print("Standard Deviation: {:.6}".format(std_dev))
-```
-
-    Standard Deviation: 1.01312
-    
-
-**Expected Output:** Standard Deviation: 1.00788
-
-We'll go deeper into Standard Deviation and Variance in a later lab.  For now, it's just good to see what it is--we should never consider a mean value of a sample without also taking a look at the standard deviation!
-
-### Calculating the Median
-
-The median is the value directly in the middle of the a dataset--in statistical terms, this is the median quartile. If the dataset was sorted from lowest value to highest value, the median is the value that would be larger than the first 50% of the data, and smaller than the second 50%.  
-
-If the dataset has an odd number of values, then the median is the middle number.   
-
-If the datasaet has an even number of values, then we take the mean of the middle two numbers. 
-
-In the cell below, write a function that takes in an array of numbers and returns the median value for that dataset.  
-
-
-```python
-def get_median(data):
-    data = sorted(data)
-    if len(data) % 2 == 0:
-        val1_index = int((len(data) / 2) - 1)
-        val2_index = val1_index + 1
-        return (data[val1_index] + data[val2_index]) / 2
-    else:
-        med_index = (len(data) // 2) 
-        return data[med_index]
-
-test1 = [5, 4, 1, 3, 2]
-test2 = [4, 2, 3, 1]
-
-print(get_median(test1)) # 3
-print(get_median(test2)) # 2.5
-print(get_median(data)) # -0.19065349358139935
-```
-
-    3
-    2.5
-    0.12898291075741067
-    
-
-### Calculating the Mode
-
-The mode is the value that shows up the most in a dataset.  A dataset can have 0 or more modes.  If no value shows up more than once, the dataset is considered to have no mode value.  If two numbers show up the same number of times, that dataset is considered **_bimodal_**.  Datasets where multiple values all show up the same number of times are considered **_multimodal_**.
-
-In the cell below, write a function that takes in an array of numbers and returns another array containing the mode value(s).  
-
-**_Hint_**: Building a histogram (also called a frequency distribution) with a dictionary is probably the easiest way to approach this problem!
-
-
-```python
-def get_mode(data):
-    # Create and populate frequency distribution
-    frequency_dict = {}
-    for i in data:
-        if i not in frequency_dict:
-            frequency_dict[i] = 1
-        else:
-            frequency_dict[i] += 1
-    
-    # Create an array for mode values
-    modes = []
-    highest_freq = max(frequency_dict.values())
-    for key, val in frequency_dict.items():
-        if val == highest_freq:
-            modes.append(key)
-    
-    return modes
-
-test1 = [1, 2, 3, 5, 5, 4]
-test2 = [1, 1, 1, 2, 3, 4, 5, 5, 5]
-print(get_mode(test1)) # [5]
-print(get_mode(test2)) # [1, 5]
-print(get_mode(data)) # [1.2]
-```
-
-    [5]
-    [1, 5]
-    [1.2]
-    
-
-### How Outliers Affect Mean, Median, and Mode
-
-The dataset that we created for this lab is fairly normally distributed, and doesn't contain any outliers. However, in the real world, we rarely have the luxury of working with outlier-free datasets.  In the cell below, we're going to write a function that helps us measure how much the mean, median, and mode are affected by outlier values.  
-
-Write a function that takes in an array of numbers and an outlier value.  This function should calculate the mean, median, and mode values for the dataset, add the outlier to the dataset, and then recalculate the mean, median and mode values.  This function should return the amount the mean, median, and mode values were skewed by the outlier value (in that order).
-
-**_Bonus_**: In the function, after adding in our outlier value, visualize the new distribution of the data as we did up above so we can see how the outlier has skewed the distribution.  
-
-
-```python
-def check_outlier_effect(data, outlier):
-    mean_val = get_mean(data)
-    median_val = get_median(data) 
-    mode_val = get_mode(data)[0]
-    
-    data = list(data)
-    data.append(outlier)
-    
-    skewed_mean = get_mean(data)
-    skewed_median = get_median(data)
-    skewed_mode = get_mode(data)[0]
-    
-    mean_effect = abs(mean_val - skewed_mean)
-    median_effect = abs(median_val - skewed_median)
-    mode_effect = abs(mode_val - skewed_mode)
-    
-    sns.distplot(data)
-    return mean_effect, median_effect, mode_effect
-    
-
-mean_effect, median_effect, mode_effect = check_outlier_effect(data, 20)
-print("Effect outlier had on mean: {}".format(mean_effect))
-print("Effect outlier had on median: {}".format(median_effect))
-print("Effect outlier had on mode: {}".format(mode_effect))
-```
-
-    Effect outlier had on mean: 0.1876028030949283
-    Effect outlier had on median: 0.007530330201733659
-    Effect outlier had on mode: 0.0
-    
-
-
-![png](output_14_1.png)
-
-
-**_Expected Output:_**
-
-```Effect outlier had on mean: 0.1876028030949283
-Effect outlier had on median: 0.007530330201733659
-Effect outlier had on mode: 0.0```
-
-As we can see from the output:
-
-* The mean is heavily influenced by outliers.
-* The median is only slightly influenced by outliers.
-* The mode is not influenced by outliers at all!
-
-### Dealing with Outliers: Calculating the Trimmed Mean
-
-One way to make use of the mean while protecting from outliers it to calculate the **_Trimmed Mean_**.  The trimmed mean avoids being influenced by outlier values by cutting off pre-set amounts from the low and high ends of the data distribution.  For instance, if we wanted to calculate the Trimmed mean of 5%, we would drop the 5% lowest values and 5% highest values, and then calculate the mean of the remaining data.  This is a great way to protect ourselves from outlier values when we need to make use of the mean on datasets that contain many outliers.  Note that the `trim` value is a parameter we can choose--if our dataset is particularly noisy, we may choose to trim 10% or 15%.  
-
-In the cell below, write a function that takes in an array of data and calculates the trimmed mean, with a default value of 5%. 
-
-
-```python
-def get_trimmed_mean(data, trim=.05):
-    lower_bound = int(np.round(len(data) * trim))
-    upper_bound = int(np.round(len(data) * (1 - trim)))
-    
-    data = data[lower_bound:upper_bound]
-    return get_mean(data)
-
-trimmed_mean_test = [-10, 1, 1, 2, 3, 4, 5, 5, 6, 20] # trim = .10
-print(get_trimmed_mean(trimmed_mean_test, .10)) # 3.375
-print(get_trimmed_mean(data)) # -0.013374707098353195
-```
-
-    3.375
-    -0.013374707098353195
-    
-
-### Conclusion
-In this lab, we learned:
-* How to calculate the mean, and how it is used
-* How to calculate the median, and how it is used
-* How to calculate the mode, and how it is used
-* How to calculate the trimmed mean, and why it is more resistant to outliers  
+In this lesson you learned how to build the probability density curves visually for a given datasets, and compare the distributions visually by looking at the spread, center and overlap. This is a useful EDA technique and can be used to answer some initial questions before embarking on a complex analytics journey.
