@@ -10,7 +10,7 @@ You will be able to:
 
 * Calculate the PDF from a given dataset containing real-valued random variables
 * Plot density functions and comment on the shape of the plot
-* Plot density functions using seaborn
+* Plot density functions using Seaborn
 
 ## Let's get started
 
@@ -31,7 +31,7 @@ import pandas as pd
 
 - Next, calculate the mean and standard deviation for weights and heights for men and women individually. You can simply use the pandas `.mean()` and `.std()` to do so.
 
-**Hint**: Use your pandas dataframe subsetting skills like loc(), iloc() and groupby()
+**Hint**: Use your pandas dataframe subsetting skills like `loc()`, `iloc()`, and `groupby()`
 
 
 ```python
@@ -62,7 +62,7 @@ female_df =  None
 ## Plot histograms (with densities on the y-axis) for male and female heights 
 
 - Make sure to create overlapping plots
-- use binsize = 10, set alpha level so that overlap can be visualized
+- Use binsize = 10, set alpha level so that overlap can be visualized
 
 
 ```python
@@ -82,8 +82,8 @@ female_df =  None
 ## Create a density function using interpolation
 
 
-- Write a densit function density() that uses interpolation and takes in a random variable
-- Use`np.hist`
+- Write a density function density() that uses interpolation and takes in a random variable
+- Use `np.hist()`
 - The function should return two lists carrying x and y coordinates for plotting the density function
 
 
@@ -106,7 +106,7 @@ def density(x):
 ![png](index_files/index_8_0.png)
 
 
-## Add Overlapping density plots to the histograms plotted earlier
+## Add overlapping density plots to the histograms plotted earlier
 
 
 ```python
@@ -117,7 +117,7 @@ def density(x):
 ![png](index_files/index_10_0.png)
 
 
-## Repeat above exerice for male and female weights
+## Repeat the above exercise for male and female weights
 
 
 ```python
@@ -138,7 +138,7 @@ def density(x):
 # What is the takeaway when comparing male and female heights and weights?
 ```
 
-## Repeat Above experiments in seaborn and compare with your results
+## Repeat the above experiments in seaborn and compare with your results
 
 
 ```python
@@ -166,4 +166,4 @@ def density(x):
 
 ## Summary
 
-In this lesson you learned how to build the probability density curves visually for a given datasets, and compare the distributions visually by looking at the spread, center and overlap. This is a useful EDA technique and can be used to answer some initial questions before embarking on a complex analytics journey.
+In this lesson, you learned how to build the probability density curves visually for a given dataset and compare the distributions visually by looking at the spread, center, and overlap. This is a useful EDA technique and can be used to answer some initial questions before embarking on a complex analytics journey.
