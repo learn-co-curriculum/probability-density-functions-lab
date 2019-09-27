@@ -8,9 +8,9 @@ In this lab, we will look at building visualizations known as **density plots** 
 
 You will be able to:
 
-* Calculate the PDF from a given dataset containing real-valued random variables
-* Plot density functions and comment on the shape of the plot
-* Plot density functions using Seaborn
+- Calculate the PDF from a given dataset containing real-valued random variables
+- Plot density functions and comment on the shape of the plot
+- Plot density functions using Seaborn
 
 ## Let's get started
 
