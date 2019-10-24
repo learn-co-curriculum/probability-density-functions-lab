@@ -8,9 +8,9 @@ In this lab, we will look at building visualizations known as **density plots** 
 
 You will be able to:
 
-* Calculate the PDF from a given dataset containing real-valued random variables
-* Plot density functions and comment on the shape of the plot
-* Plot density functions using Seaborn
+* Plot and interpret density plots and comment on the shape of the plot
+* Estimate probabilities for continuous variables by using interpolation 
+
 
 ## Let's get started
 
@@ -103,7 +103,7 @@ plt.show()
 
 
 - Write a density function density() that uses interpolation and takes in a random variable
-- Use `np.hist()`
+- Use `np.histogram()`
 - The function should return two lists carrying x and y coordinates for plotting the density function
 
 
