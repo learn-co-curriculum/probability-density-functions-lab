@@ -1,4 +1,3 @@
-
 # The Probability Density Function - Lab
 
 ## Introduction
@@ -70,7 +69,9 @@ female_df =  None
 ```
 
 
+    
 ![png](index_files/index_5_0.png)
+    
 
 
 
@@ -103,7 +104,9 @@ def density(x):
 ```
 
 
+    
 ![png](index_files/index_8_0.png)
+    
 
 
 ## Add overlapping density plots to the histograms plotted earlier
@@ -114,7 +117,9 @@ def density(x):
 ```
 
 
+    
 ![png](index_files/index_10_0.png)
+    
 
 
 ## Repeat the above exercise for male and female weights
@@ -125,7 +130,9 @@ def density(x):
 ```
 
 
+    
 ![png](index_files/index_12_0.png)
+    
 
 
 ## Write your observations in the cell below
@@ -146,7 +153,9 @@ def density(x):
 ```
 
 
+    
 ![png](index_files/index_16_0.png)
+    
 
 
 
@@ -155,7 +164,9 @@ def density(x):
 ```
 
 
+    
 ![png](index_files/index_17_0.png)
+    
 
 
 
