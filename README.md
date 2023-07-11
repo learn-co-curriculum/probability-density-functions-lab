@@ -1,4 +1,3 @@
-
 # The Probability Density Function - Lab
 
 ## Introduction
@@ -18,11 +17,13 @@ Let's import the necessary libraries for this lab.
 
 
 ```python
+
 # Import required libraries
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('ggplot')
+# plt.style.use('ggplot')
 import pandas as pd 
+import seaborn as sns
 ```
 
 ## Import the data, and calculate the mean and the standard deviation
@@ -35,6 +36,7 @@ import pandas as pd
 
 
 ```python
+
 data = pd.read_csv('weight-height.csv')
 male_df =  data.loc[data['Gender'] == 'Male']
 female_df =  data.loc[data['Gender'] == 'Female']
@@ -61,14 +63,14 @@ print('Female Weight sd:' ,female_df.Weight.std())
 # Female Weight sd: 19.022467805319007
 ```
 
-    Male Height mean: 69.02634590621737
-    Male Height sd: 2.8633622286606517
-    Male Weight mean: 187.0206206581929
-    Male Weight sd: 19.781154516763813
-    Female Height mean: 63.708773603424916
-    Female Height sd: 2.696284015765056
-    Female Weight mean: 135.8600930074687
-    Female Weight sd: 19.022467805319007
+    Male Height mean: 69.02634590621741
+    Male Height sd: 2.863362228660647
+    Male Weight mean: 187.0206206581932
+    Male Weight sd: 19.7811545167638
+    Female Height mean: 63.70877360342507
+    Female Height sd: 2.6962840157650536
+    Female Weight mean: 135.86009300746835
+    Female Weight sd: 19.022467805319028
 
 
 ## Plot histograms (with densities on the y-axis) for male and female heights 
@@ -78,6 +80,7 @@ print('Female Weight sd:' ,female_df.Weight.std())
 
 
 ```python
+
 binsize = 10
 male_df.Height.plot.hist(bins = binsize, density = True,  alpha = 0.7, label ="Male Height");
 female_df.Height.plot.hist(bins = binsize, density = True, alpha = 0.7, label = 'Female Height');
@@ -86,18 +89,10 @@ plt.show()
 ```
 
 
+    
 ![png](index_files/index_5_0.png)
+    
 
-
-
-```python
-# Record your observations - are these inline with your personal observations?
-
-# Men tend to have higher values of heights in general than female
-# The most common region for male and female heights is between 65 - 67 inches (about 5 and a half feet)
-# Male heights have a slightly higher spread than female heights, hence the male height peak is slightly smaller than female height
-# Both heights are normally distributed
-```
 
 ## Create a density function using interpolation
 
@@ -108,6 +103,7 @@ plt.show()
 
 
 ```python
+
 def density(x):
     
     n, bins = np.histogram(x, 10, density=1)
@@ -136,15 +132,18 @@ plt.show()
 ```
 
 
-![png](index_files/index_8_0.png)
+    
+![png](index_files/index_7_0.png)
+    
 
 
 ## Add overlapping density plots to the histograms plotted earlier
 
 
 ```python
-male_df.Height.plot.hist(bins = binsize, normed = True,  alpha = 0.7, label ="Male Height");
-female_df.Height.plot.hist(bins = binsize, normed = True, alpha = 0.7, label = 'Female Height');
+
+male_df.Height.plot.hist(bins = binsize, density = True,  alpha = 0.7, label ="Male Height");
+female_df.Height.plot.hist(bins = binsize, density = True, alpha = 0.7, label = 'Female Height');
 plt.legend()
 x,y = density(male_df.Height)
 plt.plot(x,y)
@@ -154,15 +153,18 @@ plt.show()
 ```
 
 
-![png](index_files/index_10_0.png)
+    
+![png](index_files/index_9_0.png)
+    
 
 
 ## Repeat the above exercise for male and female weights
 
 
 ```python
-male_df.Weight.plot.hist(bins = binsize, normed = True,  alpha = 0.7, label ="Male weight");
-female_df.Weight.plot.hist(bins = binsize, normed = True, alpha = 0.7, label = 'Female weight');
+
+male_df.Weight.plot.hist(bins = binsize, density = True,  alpha = 0.7, label ="Male weight");
+female_df.Weight.plot.hist(bins = binsize, density = True, alpha = 0.7, label = 'Female weight');
 plt.legend()
 x,y = density(male_df.Weight)
 plt.plot(x,y)
@@ -172,59 +174,56 @@ plt.show()
 ```
 
 
-![png](index_files/index_12_0.png)
+    
+![png](index_files/index_11_0.png)
+    
 
 
 ## Write your observations in the cell below
-
-
-```python
-# Record your observations - are these inline with your personal observations?
-
-# The patterns and overlap are highly similar to what we see with height distributions
-# Men generally are heavier than women
-# The common region for common weights is around 160 lbs. 
-# Male weight has slightly higher spread than female weight (i.e. more variation)
-# Most females are around 130-140 lbs whereas most men are around 180 pounds.
-
-#Takeaway
-
-# Weight is more suitable to distinguish between males and females than height
-```
 
 ## Repeat the above experiments in seaborn and compare with your results
 
 
 ```python
-import seaborn as sns
-sns.distplot(male_df.Height)
-sns.distplot(female_df.Height)
+
+sns.displot(male_df.Height)
+sns.displot(female_df.Height)
 plt.title('Comparing Heights')
 plt.show()
 ```
 
 
-![png](index_files/index_16_0.png)
+    
+![png](index_files/index_14_0.png)
+    
+
+
+
+    
+![png](index_files/index_14_1.png)
+    
 
 
 
 ```python
-import seaborn as sns
-sns.distplot(male_df.Weight)
-sns.distplot(female_df.Weight)
+
+sns.displot(male_df.Weight)
+sns.displot(female_df.Weight)
 plt.title('Comparing Weights')
 plt.show()
 ```
 
 
-![png](index_files/index_17_0.png)
+    
+![png](index_files/index_15_0.png)
+    
 
 
 
-```python
-# Your comments on the two approaches here. 
-# are they similar? what makes them different if they are?
-```
+    
+![png](index_files/index_15_1.png)
+    
+
 
 ## Summary
 
