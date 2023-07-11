@@ -20,8 +20,9 @@ Let's import the necessary libraries for this lab.
 # Import required libraries
 import numpy as np
 import matplotlib.pyplot as plt
-plt.style.use('ggplot')
-import pandas as pd 
+# plt.style.use('ggplot')
+import pandas as pd
+import seaborn as sns
 ```
 
 ## Import the data, and calculate the mean and the standard deviation
@@ -48,16 +49,6 @@ female_df =  None
 # Female Weight sd: 19.022467805319007
 ```
 
-    Male Height mean: 69.02634590621737
-    Male Height sd: 2.8633622286606517
-    Male Weight mean: 187.0206206581929
-    Male Weight sd: 19.781154516763813
-    Female Height mean: 63.708773603424916
-    Female Height sd: 2.696284015765056
-    Female Weight mean: 135.8600930074687
-    Female Weight sd: 19.022467805319007
-
-
 ## Plot histograms (with densities on the y-axis) for male and female heights 
 
 - Make sure to create overlapping plots
@@ -69,15 +60,19 @@ female_df =  None
 ```
 
 
-    
-![png](index_files/index_5_0.png)
-    
+```python
+# Record your observations - are these inline with your personal observations?
 
+```
 
 
 ```python
 # Record your observations - are these inline with your personal observations?
 
+# Men tend to have higher values of heights in general than female
+# The most common region for male and female heights is between 65 - 67 inches (about 5 and a half feet)
+# Male heights have a slightly higher spread than female heights, hence the male height peak is slightly smaller than female height
+# Both heights are normally distributed
 ```
 
 ## Create a density function using interpolation
@@ -103,12 +98,6 @@ def density(x):
 # plt.legend()
 ```
 
-
-    
-![png](index_files/index_8_0.png)
-    
-
-
 ## Add overlapping density plots to the histograms plotted earlier
 
 
@@ -116,24 +105,12 @@ def density(x):
 # Your code here 
 ```
 
-
-    
-![png](index_files/index_10_0.png)
-    
-
-
 ## Repeat the above exercise for male and female weights
 
 
 ```python
 # Your code here 
 ```
-
-
-    
-![png](index_files/index_12_0.png)
-    
-
 
 ## Write your observations in the cell below
 
@@ -145,6 +122,21 @@ def density(x):
 # What is the takeaway when comparing male and female heights and weights?
 ```
 
+
+```python
+# Record your observations - are these inline with your personal observations?
+
+# The patterns and overlap are highly similar to what we see with height distributions
+# Men generally are heavier than women
+# The common region for common weights is around 160 lbs. 
+# Male weight has slightly higher spread than female weight (i.e. more variation)
+# Most females are around 130-140 lbs whereas most men are around 180 pounds.
+
+#Takeaway
+
+# Weight is more suitable to distinguish between males and females than height
+```
+
 ## Repeat the above experiments in seaborn and compare with your results
 
 
@@ -153,26 +145,19 @@ def density(x):
 ```
 
 
-    
-![png](index_files/index_16_0.png)
-    
-
-
-
 ```python
 # Code for weights here
 ```
 
 
-    
-![png](index_files/index_17_0.png)
-    
-
-
-
 ```python
 # Your comments on the two approaches here. 
 # are they similar? what makes them different if they are?
+```
+
+
+```python
+# Well, what do you think? Overlapping or side to side (or rather top/bottom)
 ```
 
 ## Summary
