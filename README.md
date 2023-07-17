@@ -294,8 +294,8 @@ plt.show()
 ```python
 # __SOLUTION__
 
-sns.displot(male_df.Height)
-sns.displot(female_df.Height)
+sns.histplot(male_df.Height)
+sns.histplot(female_df.Height)
 plt.title('Comparing Heights')
 plt.show()
 ```
@@ -321,8 +321,8 @@ plt.show()
 ```python
 # __SOLUTION__
 
-sns.displot(male_df.Weight)
-sns.displot(female_df.Weight)
+sns.histplot(male_df.Weight)
+sns.histplot(female_df.Weight)
 plt.title('Comparing Weights')
 plt.show()
 ```
